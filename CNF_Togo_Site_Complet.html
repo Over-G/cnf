@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF Togo — Commission Nationale de la Francophonie</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --oif-green:  #52B04C;
+  --oif-yellow: #F5C400;
+  --oif-blue:   #29ABE2;
+  --oif-purple: #7B3FA0;
+  --oif-red:    #E63027;
+  --dark:       #1A1A2E;
+  --dark-mid:   #252545;
+  --navy:       #1E3A5F;
+  --navy-light: #2D5282;
+  --blue:       #1A8FBF;
+  --blue-light: #29ABE2;
+  --blue-pale:  #E0F4FC;
+  --green:      #3A8A36;
+  --green-light:#52B04C;
+  --green-pale: #E8F5E7;
+  --purple:     #5A2D82;
+  --purple-light:#7B3FA0;
+  --purple-pale: #F0E8F8;
+  --gold:       #D4A800;
+  --gold-light: #F5C400;
+  --gold-pale:  #FEF7DB;
+  --warm-white: #FAFCFD;
+  --off-white:  #F4F7F9;
+  --border:     #DDE5ED;
+  --text:       #1A2533;
+  --text-mid:   #3D5166;
+  --text-muted: #7A8F9F;
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --font-sans:  'Source Sans 3', system-ui, sans-serif;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --r-xl: 24px;
+  --shadow: 0 2px 16px rgba(30,58,95,0.10);
+  --shadow-md: 0 6px 32px rgba(30,58,95,0.14);
+  --shadow-lg: 0 12px 60px rgba(30,58,95,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  background: var(--warm-white);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ===================== NAVBAR — FOND BLANC ===================== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  gap: 0;
+  box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(30,58,95,0.08);
+}
+
+.nb-logo {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* Logo PNG réel */
+.nb-logo-img {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nb-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+  margin: 0 28px;
+  flex-shrink: 0;
+}
+
+.nb-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.nb-link {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-mid);
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: var(--r-sm);
+  transition: all 0.15s;
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+}
+.nb-link:hover { color: var(--navy); background: var(--off-white); }
+.nb-link.active {
+  color: var(--navy);
+  font-weight: 600;
+}
+.nb-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: var(--oif-blue);
+  border-radius: 2px;
+}
+
+.nb-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.nb-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-md);
+  min-width: 200px;
+  z-index: 100;
+  overflow: hidden;
+}
+.nb-dropdown:hover .nb-dropdown-menu { display: block; }
+.nb-dropdown-item {
+  display: block;
+  padding: 10px 18px;
+  font-size: 13.5px;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: all 0.12s;
+  cursor: pointer;
+}
+.nb-dropdown-item:hover { background: var(--off-white); color: var(--navy); }
+
+.nb-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.nb-lang {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nb-lang:hover { color: var(--navy); border-color: var(--navy); }
+.nb-lang .active-lang { color: var(--oif-blue); }
+.nb-search-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.nb-search-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+.nb-cta {
+  background: var(--navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: none;
+}
+.nb-cta:hover { background: var(--navy-light); }
+
+/* ===================== COLOR BAR ===================== */
+.color-bar {
+  height: 4px;
+  background: linear-gradient(90deg,
+    var(--oif-green) 0%, var(--oif-green) 25%,
+    var(--oif-yellow) 25%, var(--oif-yellow) 50%,
+    var(--oif-blue) 50%, var(--oif-blue) 75%,
+    var(--oif-purple) 75%, var(--oif-purple) 100%
+  );
+}
+
+/* ===================== PAGES (SPA) ===================== */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===================== HERO ===================== */
+.hero {
+  min-height: 90vh;
+  background: var(--dark);
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(41,171,226,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 90% 20%, rgba(123,63,160,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 10% 80%, rgba(82,176,76,0.10) 0%, transparent 50%),
+    var(--dark);
+}
+.hero-arc {
+  position: absolute; right: -80px; top: 50%;
+  transform: translateY(-50%);
+  width: 700px; height: 700px; opacity: 0.12;
+}
+.hero-arc-inner {
+  position: absolute; right: 60px; top: 50%;
+  transform: translateY(-50%);
+  width: 480px; height: 480px; opacity: 0.45;
+}
+.hero-slide-indicator {
+  position: absolute; left: 40px; bottom: 40px;
+  display: flex; gap: 8px;
+}
+.slide-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+.slide-dot.active { width: 24px; border-radius: 3px; background: var(--oif-yellow); }
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 40px; width: 100%;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--oif-yellow); margin-bottom: 24px;
+}
+.hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--oif-yellow); border-radius: 1px; }
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 500; color: #fff; line-height: 1.1;
+  letter-spacing: -0.01em; max-width: 720px; margin-bottom: 24px;
+}
+.hero-title em { font-style: italic; color: var(--oif-yellow); }
+.hero-desc {
+  font-size: 18px; font-weight: 300;
+  color: rgba(255,255,255,0.60); max-width: 520px;
+  line-height: 1.7; margin-bottom: 44px;
+}
+.hero-ctas { display: flex; gap: 16px; align-items: center; }
+.btn-hero-primary {
+  background: var(--oif-blue); color: #fff;
+  font-size: 14px; font-weight: 600; padding: 14px 32px;
+  border-radius: var(--r-sm); border: none; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 4px 20px rgba(41,171,226,0.35);
+}
+.btn-hero-primary:hover { background: #1D9FD4; transform: translateY(-1px); }
+.btn-hero-secondary {
+  font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,0.75); background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.20); padding: 13px 28px;
+  border-radius: var(--r-sm); cursor: pointer; transition: all 0.2s;
+}
+.btn-hero-secondary:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+.hero-tags {
+  position: absolute; right: 40px; bottom: 80px;
+  display: flex; flex-direction: column; gap: 10px; z-index: 2;
+}
+.hero-tag {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 30px; padding: 8px 16px 8px 10px;
+  backdrop-filter: blur(10px);
+  animation: slideIn 0.6s ease-out both;
+}
+.hero-tag:nth-child(1) { animation-delay: 0.2s; }
+.hero-tag:nth-child(2) { animation-delay: 0.35s; }
+.hero-tag:nth-child(3) { animation-delay: 0.5s; }
+@keyframes slideIn { from { opacity:0;transform:translateX(20px); } to { opacity:1;transform:translateX(0); } }
+.hero-tag-dot { width: 8px; height: 8px; border-radius: 50%; }
+.hero-tag span { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.75); }
+
+/* ===================== STATS BAR ===================== */
+.stats-bar { background: var(--navy); padding: 28px 40px; }
+.stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+.stat-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 32px 0 0; border-right: 1px solid rgba(255,255,255,0.08);
+}
+.stat-item:first-child { padding-left: 0; }
+.stat-item:last-child { border-right: none; padding-right: 0; }
+.stat-icon { width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0; }
+.stat-num { font-family: var(--font-serif); font-size:34px;font-weight:600;color:#fff;line-height:1; }
+.stat-label { font-size:13px;color:rgba(255,255,255,0.50);margin-top:3px; }
+
+/* ===================== SECTIONS COMMUNES ===================== */
+.section { padding: 88px 40px; }
+.section-inner { max-width: 1280px; margin: 0 auto; }
+.section-eyebrow { display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px; }
+.section-eyebrow-dot { width:6px;height:6px;border-radius:50%; }
+.section-title { font-family:var(--font-serif);font-size:clamp(28px,4vw,44px);font-weight:500;color:var(--text);line-height:1.2;letter-spacing:-0.01em;margin-bottom:16px; }
+.section-desc { font-size:16px;color:var(--text-muted);max-width:560px;line-height:1.7;margin-bottom:48px; }
+.btn-see-all { font-size:13px;font-weight:600;color:var(--oif-blue);background:transparent;border:1.5px solid var(--oif-blue);padding:9px 20px;border-radius:var(--r-sm);cursor:pointer;transition:all 0.15s; }
+.btn-see-all:hover { background:var(--oif-blue);color:#fff; }
+
+/* PAGE HEADER (intérieur) */
+.page-header {
+  background: var(--dark);
+  padding: 72px 40px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::after {
+  content: '';
+  position: absolute; right: -60px; top: -60px;
+  width: 400px; height: 400px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.page-header-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+.page-header-eyebrow { display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--oif-yellow);margin-bottom:16px; }
+.page-header-title { font-family:var(--font-serif);font-size:clamp(32px,5vw,58px);font-weight:500;color:#fff;line-height:1.1;margin-bottom:16px; }
+.page-header-title em { font-style:italic;color:var(--oif-yellow); }
+.page-header-desc { font-size:17px;color:rgba(255,255,255,0.55);max-width:600px;line-height:1.7; }
+.breadcrumb { display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.40);margin-bottom:20px; }
+.breadcrumb a { color:rgba(255,255,255,0.55);text-decoration:none; }
+.breadcrumb a:hover { color:var(--oif-yellow); }
+.breadcrumb span { color:rgba(255,255,255,0.25); }
+
+/* ===================== MISSION ===================== */
+.mission-section { background:var(--warm-white); padding:88px 40px; }
+.mission-inner { max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+.mission-img {
+  width:100%;aspect-ratio:4/3;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--dark-mid) 50%,var(--purple) 100%);
+  border-radius:var(--r-lg);overflow:hidden;position:relative;box-shadow:var(--shadow-lg);
+}
+.mission-img-inner { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:0.15; }
+.mission-float-card {
+  position:absolute;bottom:-24px;right:-24px;
+  background:#fff;border-radius:var(--r-md);padding:20px 24px;
+  box-shadow:var(--shadow-md);border-left:4px solid var(--oif-green);max-width:200px;
+}
+.mission-float-num { font-family:var(--font-serif);font-size:40px;font-weight:600;color:var(--oif-green);line-height:1; }
+.mission-float-label { font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.4; }
+.mission-tag { position:absolute;top:20px;left:20px;background:rgba(245,196,0,0.9);color:var(--dark);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:20px; }
+.mission-text h2 { font-family:var(--font-serif);font-size:clamp(30px,3.5vw,46px);font-weight:500;color:var(--text);line-height:1.18;letter-spacing:-0.01em;margin-bottom:24px; }
+.mission-text h2 em { font-style:italic;color:var(--oif-blue); }
+.mission-text p { font-size:16px;color:var(--text-mid);line-height:1.75;margin-bottom:20px; }
+.mission-pillars { display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px; }
+.pillar { display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--off-white);border-radius:var(--r-md);border:1px solid var(--border); }
+.pillar-icon { width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0; }
+.pillar-text { font-size:13px;font-weight:600;color:var(--text);line-height:1.4; }
+.pillar-sub { font-size:12px;color:var(--text-muted);margin-top:2px; }
+.btn-navy { display:inline-flex;align-items:center;gap:8px;margin-top:32px;background:var(--navy);color:#fff;font-size:14px;font-weight:600;padding:13px 28px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:all 0.2s; }
+.btn-navy:hover { background:var(--navy-light);transform:translateY(-1px); }
+
+/* ===================== ACTUALITÉS ===================== */
+.actu-section { background:var(--off-white);padding:88px 40px; }
+.actu-header { display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px; }
+.actu-grid { display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px; }
+.card-featured { background:#fff;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s; }
+.card-featured:hover { transform:translateY(-3px);box-shadow:var(--shadow-md); }
+.card-featured-img { height:260px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:60px; }
+.card-featured-img-overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,46,0.7) 0%,transparent 60%); }
+.card-featured-img-tag { position:absolute;top:16px;left:16px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;border-radius:20px;background:var(--oif-green);color:#fff; }
+.card-featured-body { padding:24px;flex:1;display:flex;flex-direction:column; }
+.card-meta { font-size:12px;color:var(--text-muted);margin-bottom:10px; }
+.card-title { font-family:var(--font-serif);font-size:21px;font-weight:500;color:var(--text);line-height:1.35;margin-bottom:12px; }
+.card-excerpt { font-size:14px;color:var(--text-mid);line-height:1.65;flex:1; }
+.card-link { display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--oif-blue);margin-top:20px;text-decoration:none;transition:gap 0.15s; }
+.card-link:hover { gap:10px; }
+.card-small { background:#fff;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s; }
+.card-small:hover { transform:translateY(-3px);box-shadow:var(--shadow-md); }
+.card-small-img { height:150px;position:relative;display:flex;align-items:center;justify-content:center;font-size:40px; }
+.card-small-tag { position:absolute;top:12px;left:12px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;color:#fff; }
+.card-small-body { padding:18px;flex:1;display:flex;flex-direction:column; }
+.card-small-title { font-family:var(--font-serif);font-size:17px;font-weight:500;line-height:1.35;color:var(--text);margin-bottom:8px; }
+.card-small-meta { font-size:12px;color:var(--text-muted);margin-bottom:10px; }
+.card-small-link { font-size:12px;font-weight:600;color:var(--oif-blue);text-decoration:none;margin-top:auto; }
+
+/* ===================== EVENTS ===================== */
+.events-section { background:var(--dark);padding:88px 40px;position:relative;overflow:hidden; }
+.events-section::before { content:'';position:absolute;right:-200px;top:-200px;width:600px;height:600px;border:1px solid rgba(123,63,160,0.15);border-radius:50%; }
+.events-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative;z-index:1; }
+.event-card { background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:28px;backdrop-filter:blur(10px);transition:all 0.2s;position:relative;overflow:hidden; }
+.event-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:2px 2px 0 0; }
+.event-card:nth-child(1)::before { background:var(--oif-blue); }
+.event-card:nth-child(2)::before { background:var(--oif-green); }
+.event-card:nth-child(3)::before { background:var(--oif-purple); }
+.event-card:hover { background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);transform:translateY(-3px); }
+.event-date-badge { display:inline-flex;flex-direction:column;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:var(--r-md);padding:10px 16px;margin-bottom:20px; }
+.event-day { font-family:var(--font-serif);font-size:36px;font-weight:600;color:#fff;line-height:1; }
+.event-month { font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--oif-yellow);margin-top:2px; }
+.event-title { font-family:var(--font-serif);font-size:19px;font-weight:500;color:#fff;line-height:1.35;margin-bottom:10px; }
+.event-location { font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:16px;display:flex;align-items:center;gap:6px; }
+.event-location::before { content:'📍';font-size:12px; }
+.event-desc { font-size:13.5px;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:20px; }
+.btn-event { font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);background:transparent;padding:8px 18px;border-radius:var(--r-sm);cursor:pointer;transition:all 0.15s; }
+.btn-event:hover { background:rgba(255,255,255,0.10);color:#fff; }
+
+/* ===================== CANDIDATURES ===================== */
+.candi-section { background:var(--warm-white);padding:88px 40px; }
+.candi-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:24px; }
+.candi-card { background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:all 0.2s;position:relative;overflow:hidden; }
+.candi-card::before { content:'';position:absolute;top:0;left:0;width:4px;height:100%; }
+.candi-card:nth-child(1)::before { background:var(--oif-blue); }
+.candi-card:nth-child(2)::before { background:var(--oif-green); }
+.candi-card:nth-child(3)::before { background:var(--oif-purple); }
+.candi-card:nth-child(4)::before { background:var(--gold); }
+.candi-card:hover { transform:translateY(-2px);box-shadow:var(--shadow-md); }
+.candi-type { display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;margin-bottom:14px;padding:5px 12px;border-radius:20px;width:fit-content; }
+.candi-title { font-family:var(--font-serif);font-size:20px;font-weight:500;color:var(--text);line-height:1.35;margin-bottom:10px; }
+.candi-org { font-size:13px;color:var(--text-muted);margin-bottom:16px; }
+.candi-deadline { display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--off-white);border-radius:var(--r-md);border:1px solid var(--border);margin-bottom:20px; }
+.candi-deadline-label { font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.05em; }
+.candi-deadline-date { font-size:13px;font-weight:700;color:var(--text); }
+.candi-deadline-urgent { background:#FFF4E6;border-color:#F5C400; }
+.candi-deadline-urgent .candi-deadline-label { color:#9B6B00; }
+.candi-deadline-urgent .candi-deadline-date { color:#7A5200; }
+.candi-deadline-badge { margin-left:auto;font-size:10px;font-weight:700;background:var(--oif-yellow);color:var(--dark);padding:3px 9px;border-radius:10px; }
+.candi-footer { display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid var(--border); }
+.btn-candi-detail { font-size:13px;font-weight:600;color:var(--oif-blue);background:transparent;border:none;cursor:pointer;padding:0; }
+.btn-candi-postuler { font-size:13px;font-weight:600;color:#fff;background:var(--navy);border:none;padding:9px 20px;border-radius:var(--r-sm);cursor:pointer;transition:all 0.15s; }
+.btn-candi-postuler:hover { background:var(--navy-light); }
+
+/* ===================== NEWSLETTER ===================== */
+.newsletter-section {
+  background:linear-gradient(135deg,var(--navy) 0%,var(--dark-mid) 50%,var(--purple) 100%);
+  padding:72px 40px;position:relative;overflow:hidden;
+}
+.newsletter-inner { max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1; }
+.nl-text h2 { font-family:var(--font-serif);font-size:clamp(28px,3vw,40px);font-weight:500;color:#fff;line-height:1.2;margin-bottom:12px; }
+.nl-text h2 em { font-style:italic;color:var(--oif-yellow); }
+.nl-text p { font-size:15px;color:rgba(255,255,255,0.55);line-height:1.7; }
+.nl-input-row { display:flex;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.15);border-radius:var(--r-sm);overflow:hidden; }
+.nl-input-row:focus-within { border-color:var(--oif-blue); }
+.nl-input { flex:1;background:transparent;border:none;outline:none;padding:14px 20px;font-size:14px;color:#fff;font-family:var(--font-sans); }
+.nl-input::placeholder { color:rgba(255,255,255,0.35); }
+.btn-nl { background:var(--oif-blue);color:#fff;border:none;padding:14px 24px;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.15s;white-space:nowrap; }
+.btn-nl:hover { background:#1D9FD4; }
+.nl-rgpd { font-size:12px;color:rgba(255,255,255,0.30);line-height:1.5;margin-top:10px; }
+.nl-rgpd a { color:rgba(255,255,255,0.50);text-decoration:underline; }
+
+/* ===================== RESSOURCES ===================== */
+.ressources-section { background:var(--off-white);padding:88px 40px; }
+.ressources-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:20px; }
+.ressource-card { background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow);transition:all 0.2s; }
+.ressource-card:hover { transform:translateY(-3px);box-shadow:var(--shadow-md); }
+.ressource-icon { width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px; }
+.ressource-type { font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px; }
+.ressource-title { font-family:var(--font-serif);font-size:16px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:8px; }
+.ressource-date { font-size:12px;color:var(--text-muted);margin-bottom:14px; }
+.ressource-footer { display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border); }
+.ressource-size { font-size:11px;color:var(--text-muted); }
+.btn-dl { font-size:12px;font-weight:600;color:var(--navy);border:1.5px solid var(--border);padding:6px 14px;border-radius:var(--r-sm);background:transparent;cursor:pointer;transition:all 0.15s; }
+.btn-dl:hover { background:var(--navy);color:#fff;border-color:var(--navy); }
+
+/* ===================== PARTNERS ===================== */
+.partners-section { background:var(--warm-white);padding:52px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+.partners-label { text-align:center;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:32px; }
+.partners-logos { display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap; }
+.partner-logo { display:flex;align-items:center;gap:10px;opacity:0.45;transition:opacity 0.15s;cursor:pointer; }
+.partner-logo:hover { opacity:0.85; }
+.partner-name { font-family:var(--font-serif);font-size:14px;font-weight:600;color:var(--text);line-height:1.2; }
+.partner-name small { display:block;font-family:var(--font-sans);font-size:10px;font-weight:400;color:var(--text-muted);letter-spacing:0.05em; }
+
+/* ===================== FOOTER ===================== */
+.footer { background:var(--dark);padding:72px 40px 0; }
+.footer-inner { max-width:1280px;margin:0 auto; }
+.footer-top { display:grid;grid-template-columns:2.2fr 1fr 1fr 1.4fr;gap:48px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.07); }
+.footer-brand-logo { display:flex;align-items:center;gap:12px;margin-bottom:20px; }
+.footer-brand-logo img { height:52px;width:auto; }
+.footer-brand-name { font-family:var(--font-serif);font-size:21px;color:#fff;font-weight:500; }
+.footer-brand-name span { color:var(--oif-yellow); }
+.footer-brand-desc { font-size:14px;color:rgba(255,255,255,0.40);line-height:1.75;margin-bottom:28px; }
+.footer-oif-badge { display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:30px;padding:8px 16px;margin-bottom:24px; }
+.footer-oif-badge-text { font-size:11px;color:rgba(255,255,255,0.50);line-height:1.3; }
+.footer-oif-badge-text strong { display:block;color:rgba(255,255,255,0.75);font-size:12px; }
+.footer-socials { display:flex;gap:10px; }
+.social-btn { width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(255,255,255,0.55);cursor:pointer;transition:all 0.15s;text-decoration:none; }
+.social-btn:hover { background:rgba(255,255,255,0.14);color:#fff; }
+.footer-col-title { font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.30);margin-bottom:20px; }
+.footer-link { display:block;font-size:13.5px;color:rgba(255,255,255,0.50);text-decoration:none;padding:6px 0;transition:color 0.15s; }
+.footer-link:hover { color:rgba(255,255,255,0.85); }
+.footer-nl-title { font-family:var(--font-serif);font-size:18px;font-weight:500;color:#fff;margin-bottom:8px; }
+.footer-nl-desc { font-size:13px;color:rgba(255,255,255,0.40);line-height:1.6;margin-bottom:16px; }
+.footer-nl-form { display:flex;border:1px solid rgba(255,255,255,0.12);border-radius:var(--r-sm);overflow:hidden; }
+.footer-nl-input { flex:1;background:rgba(255,255,255,0.04);border:none;outline:none;padding:11px 14px;font-size:13px;color:#fff;font-family:var(--font-sans); }
+.footer-nl-input::placeholder { color:rgba(255,255,255,0.25); }
+.footer-nl-btn { background:var(--oif-yellow);color:var(--dark);border:none;padding:11px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:background 0.15s; }
+.footer-nl-btn:hover { background:#FFD429; }
+.footer-color-bar { height:4px;margin:0 -40px;background:linear-gradient(90deg,var(--oif-green) 0%,var(--oif-green) 25%,var(--oif-yellow) 25%,var(--oif-yellow) 50%,var(--oif-blue) 50%,var(--oif-blue) 75%,var(--oif-purple) 75%,var(--oif-purple) 100%); }
+.footer-bottom { padding:20px 0;display:flex;align-items:center;justify-content:space-between; }
+.footer-copyright { font-size:12px;color:rgba(255,255,255,0.25); }
+.footer-bottom-links { display:flex;gap:24px; }
+.footer-bottom-link { font-size:12px;color:rgba(255,255,255,0.25);text-decoration:none;transition:color 0.15s; }
+.footer-bottom-link:hover { color:rgba(255,255,255,0.55); }
+
+/* ===================== PAGE À PROPOS ===================== */
+.about-grid { max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;padding:80px 40px; }
+.about-text h2 { font-family:var(--font-serif);font-size:38px;font-weight:500;color:var(--text);line-height:1.2;margin-bottom:20px; }
+.about-text h2 em { font-style:italic;color:var(--oif-blue); }
+.about-text p { font-size:16px;color:var(--text-mid);line-height:1.8;margin-bottom:18px; }
+.about-timeline { position:relative;padding-left:28px; }
+.about-timeline::before { content:'';position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--oif-blue),var(--oif-green),var(--oif-yellow)); }
+.timeline-item { position:relative;margin-bottom:32px; }
+.timeline-dot { position:absolute;left:-28px;top:6px;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px var(--oif-blue); }
+.timeline-year { font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--oif-blue);margin-bottom:4px; }
+.timeline-text { font-family:var(--font-serif);font-size:18px;font-weight:500;color:var(--text);line-height:1.35;margin-bottom:6px; }
+.timeline-sub { font-size:14px;color:var(--text-muted);line-height:1.6; }
+.team-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:16px; }
+.team-card { background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;text-align:center;box-shadow:var(--shadow);transition:all 0.2s; }
+.team-card:hover { transform:translateY(-3px);box-shadow:var(--shadow-md); }
+.team-avatar { width:72px;height:72px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:28px; }
+.team-name { font-family:var(--font-serif);font-size:19px;font-weight:500;color:var(--text);margin-bottom:4px; }
+.team-role { font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px; }
+.team-bio { font-size:13px;color:var(--text-mid);line-height:1.6; }
+
+/* ===================== PAGE ACTUALITÉS ===================== */
+.actu-all-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1280px;margin:0 auto;padding:60px 40px; }
+.actu-filters { display:flex;gap:10px;flex-wrap:wrap;max-width:1280px;margin:0 auto;padding:0 40px 40px; }
+.filter-btn { font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;border:1.5px solid var(--border);background:#fff;color:var(--text-mid);cursor:pointer;transition:all 0.15s; }
+.filter-btn:hover,.filter-btn.active { background:var(--navy);color:#fff;border-color:var(--navy); }
+
+/* ===================== PAGE CONTACT ===================== */
+.contact-grid { max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:64px;padding:80px 40px; }
+.contact-info-card { background:var(--navy);border-radius:var(--r-xl);padding:40px;color:#fff; }
+.contact-info-card h3 { font-family:var(--font-serif);font-size:28px;font-weight:500;margin-bottom:24px; }
+.contact-item { display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.08); }
+.contact-item:last-of-type { border-bottom:none; }
+.contact-icon { width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0; }
+.contact-label { font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.40);margin-bottom:4px; }
+.contact-val { font-size:15px;color:#fff;line-height:1.5; }
+.contact-form { background:#fff;border-radius:var(--r-xl);padding:40px;box-shadow:var(--shadow-md);border:1px solid var(--border); }
+.contact-form h3 { font-family:var(--font-serif);font-size:28px;font-weight:500;color:var(--text);margin-bottom:28px; }
+.form-row { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px; }
+.form-group { display:flex;flex-direction:column;gap:6px;margin-bottom:16px; }
+.form-label { font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-mid); }
+.form-input,.form-select,.form-textarea {
+  padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-md);
+  font-size:15px;font-family:var(--font-sans);color:var(--text);
+  background:var(--off-white);outline:none;transition:border-color 0.15s;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus { border-color:var(--oif-blue);background:#fff; }
+.form-textarea { resize:vertical;min-height:120px; }
+.btn-submit { width:100%;background:var(--navy);color:#fff;font-size:15px;font-weight:600;padding:14px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:all 0.2s; }
+.btn-submit:hover { background:var(--navy-light);transform:translateY(-1px); }
+
+/* ===================== PAGE RESSOURCES ===================== */
+.ressources-full-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1280px;margin:0 auto;padding:60px 40px; }
+.ressources-sidebar { max-width:1280px;margin:0 auto;padding:0 40px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap; }
+.ressources-search { flex:1;max-width:400px;position:relative; }
+.ressources-search input { width:100%;padding:11px 16px 11px 40px;border:1.5px solid var(--border);border-radius:var(--r-md);font-size:14px;background:#fff;outline:none;transition:border-color 0.15s; }
+.ressources-search input:focus { border-color:var(--oif-blue); }
+.ressources-search::before { content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px; }
+
+/* ===================== ANIMATIONS ===================== */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+.hero-content > * { animation:fadeUp 0.7s ease-out both; }
+.hero-content > *:nth-child(1) { animation-delay:0.1s; }
+.hero-content > *:nth-child(2) { animation-delay:0.25s; }
+.hero-content > *:nth-child(3) { animation-delay:0.4s; }
+.hero-content > *:nth-child(4) { animation-delay:0.55s; }
+
+/* Organigramme */
+.org-section { padding:80px 40px;background:var(--off-white); }
+.org-inner { max-width:1280px;margin:0 auto; }
+.org-chart { display:flex;flex-direction:column;align-items:center;gap:0; }
+.org-level { display:flex;justify-content:center;gap:24px;margin-bottom:0; }
+.org-node {
+  background:#fff;border:1px solid var(--border);border-radius:var(--r-md);
+  padding:16px 24px;text-align:center;box-shadow:var(--shadow);
+  min-width:200px;position:relative;transition:all 0.2s;cursor:default;
+}
+.org-node:hover { box-shadow:var(--shadow-md);transform:translateY(-2px); }
+.org-node.president { background:var(--navy);color:#fff;border-color:var(--navy); }
+.org-node.president .org-node-title { color:#fff; }
+.org-node.president .org-node-sub { color:rgba(255,255,255,0.6); }
+.org-node-icon { font-size:24px;margin-bottom:8px; }
+.org-node-title { font-family:var(--font-serif);font-size:15px;font-weight:500;color:var(--text);line-height:1.3; }
+.org-node-sub { font-size:11px;color:var(--text-muted);margin-top:4px; }
+.org-connector { width:2px;height:32px;background:var(--border);margin:0 auto; }
+.org-connector-h { display:flex;align-items:center;justify-content:center;gap:0;position:relative;margin-bottom:0; }
+.org-connector-h::before { content:'';position:absolute;top:0;left:10%;right:10%;height:2px;background:var(--border); }
+
+/* MAP section */
+.map-section { padding:80px 40px;background:var(--warm-white); }
+.map-inner { max-width:1280px;margin:0 auto; }
+.map-box { background:var(--off-white);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;height:340px;position:relative;display:flex;align-items:center;justify-content:center; }
+.map-placeholder { text-align:center; }
+.map-placeholder .map-icon { font-size:48px;margin-bottom:12px; }
+.map-placeholder p { color:var(--text-muted);font-size:14px; }
+
+/* Util */
+.sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0); }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR — FOND BLANC ===================== -->
+<nav class="navbar" role="navigation" aria-label="Navigation principale">
+  <a class="nb-logo" href="#" onclick="showPage('accueil');return false;">
+    <!-- Logo PNG réel de la CNF Togo -->
+    <img class="nb-logo-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkwIiB2aWV3Qm94PSIwIDAgMjIwIDkwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDwhLS0gT0lGIFJpbmcgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAsIDQ1KSI+CiAgICA8cGF0aCBkPSJNMCAtMzAgQTE1IDE1IDAgMCAxIDMwIDAiIHN0cm9rZT0iIzUyQjA0QyIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0zMCAwIEExNSAxNSAwIDAgMSAwIDMwIiBzdHJva2U9IiM3QjNGQTAiIHN0cm9rZS13aWR0aD0iNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+CiAgICA8cGF0aCBkPSJNMCAzMCBBMTUgMTUgMCAwIDEgLTMwIDAiIHN0cm9rZT0iIzI5QUJFMiIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0tMzAgMCBBMTUgMTUgMCAwIDEgMCAtMzAiIHN0cm9rZT0iI0Y1QzQwMCIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KICAgIDwhLS0gaW5uZXIgY2lyY2xlIC0tPgogICAgPGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjEyIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjZGRlNWVkIiBzdHJva2Utd2lkdGg9IjEiLz4KICAgIDx0ZXh0IHg9IjAiIHk9IjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iIzFFM0E1RiI+VEc8L3RleHQ+CiAgPC9nPgogIDwhLS0gVGV4dGUgLS0+CiAgPHRleHQgeD0iOTgiIHk9IjMwIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI2MDAiIGxldHRlci1zcGFjaW5nPSIwLjE1ZW0iIGZpbGw9IiM3QThGOUYiPlBBUiBMQSBGUkFOQ09QSE9OSUVSPC90ZXh0PgogIDx0ZXh0IHg9Ijk4IiB5PSI0OSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjMUEyNTMzIj5Db21taXNzaW9uIE5hdGlvbmFsZTwvdGV4dD4KICA8dGV4dCB4PSI5OCIgeT0iNjkiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjUwMCIgZmlsbD0iIzFBMjUzMyI+ZGUgbGEgPHRzcGFuIGZvbnQtc3R5bGU9Iml0YWxpYyIgZmlsbD0iIzI5QUJFMiI+RnJhbmNvcGhvbmllPC90c3Bhbj48L3RleHQ+CiAgPHRleHQgeD0iOTgiIHk9Ijg1IiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIwLjA4ZW0iIGZpbGw9IiMxRTNBNUYiPlRPR088L3RleHQ+Cjwvc3ZnPg==" alt="CNF Togo — Commission Nationale de la Francophonie">
+  </a>
+
+  <div class="nb-divider" aria-hidden="true"></div>
+
+  <nav class="nb-nav" aria-label="Liens principaux">
+    <a class="nb-link active" id="nav-accueil" href="#" onclick="showPage('accueil');return false;">Accueil</a>
+    <div class="nb-dropdown">
+      <a class="nb-link" id="nav-apropos" href="#" onclick="showPage('apropos');return false;">À Propos ▾</a>
+      <div class="nb-dropdown-menu">
+        <a class="nb-dropdown-item" href="#" onclick="showPage('apropos');return false;">Notre mission</a>
+        <a class="nb-dropdown-item" href="#" onclick="showPage('apropos');return false;">Historique</a>
+        <a class="nb-dropdown-item" href="#" onclick="showPage('apropos');return false;">Organigramme</a>
+        <a class="nb-dropdown-item" href="#" onclick="showPage('apropos');return false;">Membres</a>
+      </div>
+    </div>
+    <a class="nb-link" id="nav-actualites" href="#" onclick="showPage('actualites');return false;">Actualités</a>
+    <a class="nb-link" id="nav-candidatures" href="#" onclick="showPage('candidatures');return false;">Candidatures</a>
+    <div class="nb-dropdown">
+      <a class="nb-link" id="nav-ressources" href="#" onclick="showPage('ressources');return false;">Ressources ▾</a>
+      <div class="nb-dropdown-menu">
+        <a class="nb-dropdown-item" href="#" onclick="showPage('ressources');return false;">Bibliothèque</a>
+        <a class="nb-dropdown-item" href="#" onclick="showPage('ressources');return false;">Rapports</a>
+        <a class="nb-dropdown-item" href="#" onclick="showPage('ressources');return false;">Textes officiels</a>
+        <a class="nb-dropdown-item" href="#" onclick="showPage('ressources');return false;">Galerie photos</a>
+      </div>
+    </div>
+    <a class="nb-link" id="nav-evenements" href="#" onclick="showPage('evenements');return false;">Événements</a>
+    <a class="nb-link" id="nav-contact" href="#" onclick="showPage('contact');return false;">Contact</a>
+  </nav>
+
+  <div class="nb-actions">
+    <div class="nb-lang" role="button" aria-label="Changer de langue">
+      <span class="active-lang">FR</span> | EN
+    </div>
+    <div class="nb-search-btn" role="button" aria-label="Rechercher">🔍</div>
+    <button class="nb-cta" onclick="showPage('candidatures');return false;">Postuler</button>
+  </div>
+</nav>
+<div class="color-bar"></div>
+
+<!-- ===================== PAGE: ACCUEIL ===================== -->
+<div id="page-accueil" class="page active">
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Section principale">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-arc" aria-hidden="true">
+      <svg viewBox="0 0 700 700" fill="none"><circle cx="350" cy="350" r="300" stroke="white" stroke-width="1" stroke-dasharray="6 12"/><circle cx="350" cy="350" r="240" stroke="white" stroke-width="0.5" stroke-dasharray="4 14" opacity="0.5"/></svg>
+    </div>
+    <div class="hero-arc-inner" aria-hidden="true">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 5 A45 45 0 0 1 95 50" stroke="#52B04C" stroke-width="8" stroke-linecap="round"/>
+        <path d="M95 50 A45 45 0 0 1 50 95" stroke="#7B3FA0" stroke-width="8" stroke-linecap="round"/>
+        <path d="M50 95 A45 45 0 0 1 5 50" stroke="#29ABE2" stroke-width="8" stroke-linecap="round"/>
+        <path d="M5 50 A45 45 0 0 1 50 5" stroke="#F5C400" stroke-width="8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Commission Nationale de la Francophonie — Togo</div>
+      <h1 class="hero-title">La voix du Togo<br>au cœur de <em>l'espace<br>francophone</em></h1>
+      <p class="hero-desc">Coordonner, promouvoir et valoriser la langue française. La CNF-Togo agit pour renforcer la présence du Togo au sein de l'Organisation Internationale de la Francophonie.</p>
+      <div class="hero-ctas">
+        <button class="btn-hero-primary" onclick="showPage('apropos')">Découvrir la CNF ›</button>
+        <button class="btn-hero-secondary" onclick="showPage('actualites')">Voir les actualités</button>
+      </div>
+    </div>
+    <div class="hero-tags" aria-hidden="true">
+      <div class="hero-tag"><div class="hero-tag-dot" style="background:var(--oif-green);"></div><span>Promotion du français</span></div>
+      <div class="hero-tag"><div class="hero-tag-dot" style="background:var(--oif-yellow);"></div><span>Programmes OIF</span></div>
+      <div class="hero-tag"><div class="hero-tag-dot" style="background:var(--oif-blue);"></div><span>Bourses & candidatures</span></div>
+    </div>
+    <div class="hero-slide-indicator">
+      <div class="slide-dot active"></div><div class="slide-dot"></div>
+      <div class="slide-dot"></div><div class="slide-dot"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-icon" style="background:rgba(41,171,226,0.12);">🌍</div><div><div class="stat-num">88</div><div class="stat-label">États membres OIF</div></div></div>
+      <div class="stat-item"><div class="stat-icon" style="background:rgba(82,176,76,0.12);">📋</div><div><div class="stat-num">14+</div><div class="stat-label">Programmes actifs</div></div></div>
+      <div class="stat-item"><div class="stat-icon" style="background:rgba(245,196,0,0.12);">📚</div><div><div class="stat-num">200+</div><div class="stat-label">Ressources disponibles</div></div></div>
+      <div class="stat-item"><div class="stat-icon" style="background:rgba(123,63,160,0.12);">🎓</div><div><div class="stat-num">350M</div><div class="stat-label">Locuteurs francophones</div></div></div>
+    </div>
+  </div>
+
+  <!-- MISSION -->
+  <section class="mission-section">
+    <div class="mission-inner">
+      <div style="position:relative;">
+        <div class="mission-img">
+          <div class="mission-img-inner">🇹🇬</div>
+          <div class="mission-tag">Togo · Lomé</div>
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(41,171,226,0.25) 0%,rgba(123,63,160,0.20) 50%,rgba(82,176,76,0.15) 100%);"></div>
+          <div style="position:absolute;right:-30px;top:-30px;width:160px;height:160px;opacity:0.2;">
+            <svg viewBox="0 0 100 100" fill="none"><path d="M50 5 A45 45 0 0 1 95 50" stroke="#52B04C" stroke-width="10" stroke-linecap="round"/><path d="M95 50 A45 45 0 0 1 50 95" stroke="#7B3FA0" stroke-width="10" stroke-linecap="round"/><path d="M50 95 A45 45 0 0 1 5 50" stroke="#29ABE2" stroke-width="10" stroke-linecap="round"/><path d="M5 50 A45 45 0 0 1 50 5" stroke="#F5C400" stroke-width="10" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="mission-float-card"><div class="mission-float-num">1970</div><div class="mission-float-label">Création de la Francophonie institutionnelle</div></div>
+      </div>
+      <div class="mission-text">
+        <div class="section-eyebrow" style="color:var(--oif-blue);"><div class="section-eyebrow-dot" style="background:var(--oif-blue);"></div>Notre Institution</div>
+        <h2>Un organe gouvernemental au service de la <em>langue française</em></h2>
+        <p>La Commission Nationale de la Francophonie du Togo est l'organe officiel chargé de coordonner la participation du Togo aux activités de l'Organisation Internationale de la Francophonie (OIF).</p>
+        <p>Elle veille à la promotion de la langue française, assure le suivi des engagements du Togo et met en œuvre des programmes de valorisation culturelle et linguistique sur l'ensemble du territoire national.</p>
+        <div class="mission-pillars">
+          <div class="pillar"><div class="pillar-icon" style="background:rgba(41,171,226,0.10);">🎯</div><div><div class="pillar-text">Coordination OIF</div><div class="pillar-sub">Liaison officielle avec l'OIF</div></div></div>
+          <div class="pillar"><div class="pillar-icon" style="background:rgba(82,176,76,0.10);">📖</div><div><div class="pillar-text">Promotion du français</div><div class="pillar-sub">Valorisation linguistique</div></div></div>
+          <div class="pillar"><div class="pillar-icon" style="background:rgba(245,196,0,0.12);">🤝</div><div><div class="pillar-text">Partenariats</div><div class="pillar-sub">Coopération internationale</div></div></div>
+          <div class="pillar"><div class="pillar-icon" style="background:rgba(123,63,160,0.10);">🎓</div><div><div class="pillar-text">Bourses & Formation</div><div class="pillar-sub">Appels à candidature</div></div></div>
+        </div>
+        <button class="btn-navy" onclick="showPage('apropos')">Découvrir notre mission →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTUALITÉS -->
+  <section class="actu-section">
+    <div class="section-inner">
+      <div class="actu-header">
+        <div><div class="section-eyebrow" style="color:var(--oif-green);"><div class="section-eyebrow-dot" style="background:var(--oif-green);"></div>Actualités</div><h2 class="section-title">Dernières nouvelles<br>de la Francophonie</h2></div>
+        <button class="btn-see-all" onclick="showPage('actualites')">Voir toutes les actualités →</button>
+      </div>
+      <div class="actu-grid">
+        <div class="card-featured">
+          <div class="card-featured-img" style="background:linear-gradient(135deg,#1E3A5F,#29ABE2);">🌍<div class="card-featured-img-overlay"></div><div class="card-featured-img-tag">Francophonie</div></div>
+          <div class="card-featured-body">
+            <div class="card-meta">28 mars 2026 · CNF Rédaction</div>
+            <h3 class="card-title">Journée Internationale de la Francophonie 2026 : le Togo célèbre la diversité linguistique</h3>
+            <p class="card-excerpt">La Commission Nationale de la Francophonie du Togo a organisé une série d'événements culturels et éducatifs à Lomé pour marquer la Journée Internationale de la Francophonie.</p>
+            <a class="card-link" href="#" onclick="showPage('actualites');return false;">Lire l'article complet ›</a>
+          </div>
+        </div>
+        <div class="card-small">
+          <div class="card-small-img" style="background:linear-gradient(135deg,#3A8A36,#52B04C);">📋<div class="card-small-tag" style="background:var(--oif-green);">Programme</div></div>
+          <div class="card-small-body"><div class="card-small-meta">15 mars 2026</div><h3 class="card-small-title">Nouveau programme de formation en langue française pour les enseignants togolais</h3><a class="card-small-link" href="#" onclick="showPage('actualites');return false;">Lire →</a></div>
+        </div>
+        <div class="card-small">
+          <div class="card-small-img" style="background:linear-gradient(135deg,#5A2D82,#7B3FA0);">🏆<div class="card-small-tag" style="background:var(--oif-purple);">Prix</div></div>
+          <div class="card-small-body"><div class="card-small-meta">5 mars 2026</div><h3 class="card-small-title">Prix de la Francophonie 2026 : appel à candidatures ouvert pour les jeunes togolais</h3><a class="card-small-link" href="#" onclick="showPage('candidatures');return false;">Lire →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉVÉNEMENTS -->
+  <section class="events-section">
+    <div class="section-inner" style="position:relative;z-index:1;">
+      <div class="section-eyebrow events-eyebrow"><div class="section-eyebrow-dot" style="background:var(--oif-yellow);"></div>Agenda</div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:44px;">
+        <h2 class="section-title events-title" style="margin-bottom:0;">Prochains événements<br>de la <em style="font-style:italic;color:var(--oif-yellow);">Francophonie</em></h2>
+        <button class="btn-see-all" style="border-color:rgba(255,255,255,0.25);color:rgba(255,255,255,0.65);" onclick="showPage('evenements')">Voir l'agenda complet →</button>
+      </div>
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-date-badge"><div class="event-day">20</div><div class="event-month">Mai 2026</div></div>
+          <div class="event-title">Forum annuel de la Francophonie au Togo</div>
+          <div class="event-location">Palais des Congrès, Lomé</div>
+          <div class="event-desc">Réunion annuelle des acteurs de la francophonie togolaise : bilan, perspectives et nouveaux partenariats.</div>
+          <button class="btn-event">En savoir plus →</button>
+        </div>
+        <div class="event-card">
+          <div class="event-date-badge"><div class="event-day">14</div><div class="event-month">Juin 2026</div></div>
+          <div class="event-title">Concours de la Langue Française — Édition nationale</div>
+          <div class="event-location">Université de Lomé</div>
+          <div class="event-desc">Compétition ouverte aux étudiants et lycéens togolais : éloquence, rédaction, poésie francophone.</div>
+          <button class="btn-event">En savoir plus →</button>
+        </div>
+        <div class="event-card">
+          <div class="event-date-badge"><div class="event-day">02</div><div class="event-month">Jul. 2026</div></div>
+          <div class="event-title">Atelier de formation — Diplomatie francophone</div>
+          <div class="event-location">CNF-Togo, Lomé</div>
+          <div class="event-desc">Formation destinée aux cadres de l'administration publique : négociation et représentation dans les instances OIF.</div>
+          <button class="btn-event">En savoir plus →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANDIDATURES -->
+  <section class="candi-section">
+    <div class="section-inner">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:44px;">
+        <div><div class="section-eyebrow" style="color:var(--oif-purple);"><div class="section-eyebrow-dot" style="background:var(--oif-purple);"></div>Opportunités</div><h2 class="section-title">Appels à candidature<br>en cours</h2></div>
+        <button class="btn-see-all" onclick="showPage('candidatures')">Voir toutes les opportunités →</button>
+      </div>
+      <div class="candi-grid">
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(41,171,226,0.10);color:var(--oif-blue);">🎓 Bourse</div>
+          <div class="candi-title">Bourses de l'OIF — Master en études francophones</div>
+          <div class="candi-org">Organisation Internationale de la Francophonie · Paris, France</div>
+          <div class="candi-deadline candi-deadline-urgent"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">30 avril 2026</div></div><div class="candi-deadline-badge">⚡ Urgent</div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Détails →</button><button class="btn-candi-postuler">Postuler</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(82,176,76,0.10);color:var(--oif-green);">💼 Programme</div>
+          <div class="candi-title">Programme IFEF — Formation des formateurs en français</div>
+          <div class="candi-org">Institut de la Francophonie pour l'Éducation et la Formation</div>
+          <div class="candi-deadline"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">15 mai 2026</div></div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Détails →</button><button class="btn-candi-postuler">Postuler</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(123,63,160,0.10);color:var(--oif-purple);">🏆 Prix</div>
+          <div class="candi-title">Prix Senghor de la création littéraire francophone 2026</div>
+          <div class="candi-org">Fondation Senghor · Dakar, Sénégal</div>
+          <div class="candi-deadline"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">30 juin 2026</div></div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Détails →</button><button class="btn-candi-postuler">Postuler</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(212,168,0,0.10);color:var(--gold);">🌐 Mobilité</div>
+          <div class="candi-title">Volontariat international de la Francophonie (VIF)</div>
+          <div class="candi-org">OIF · Plusieurs destinations francophones</div>
+          <div class="candi-deadline candi-deadline-urgent"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">10 mai 2026</div></div><div class="candi-deadline-badge">⚡ Urgent</div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Détails →</button><button class="btn-candi-postuler">Postuler</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <div class="nl-text">
+        <div class="section-eyebrow" style="color:var(--oif-yellow);margin-bottom:12px;"><div class="section-eyebrow-dot" style="background:var(--oif-yellow);"></div>Newsletter</div>
+        <h2>Restez informé des<br>actualités de la <em>Francophonie</em></h2>
+        <p style="margin-top:12px;">Recevez directement dans votre boîte mail les dernières actualités, événements et appels à candidature de la CNF-Togo.</p>
+      </div>
+      <div>
+        <div class="nl-input-row"><input class="nl-input" type="email" placeholder="Votre adresse e-mail"><button class="btn-nl">S'inscrire</button></div>
+        <p class="nl-rgpd" style="margin-top:10px;">En vous inscrivant, vous acceptez notre <a href="#">politique de confidentialité</a>. Conforme RGPD.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESSOURCES PREVIEW -->
+  <section class="ressources-section">
+    <div class="section-inner">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;">
+        <div><div class="section-eyebrow" style="color:var(--oif-blue);"><div class="section-eyebrow-dot" style="background:var(--oif-blue);"></div>Bibliothèque</div><h2 class="section-title">Ressources documentaires</h2></div>
+        <button class="btn-see-all" onclick="showPage('ressources')">Accéder à la bibliothèque →</button>
+      </div>
+      <div class="ressources-grid">
+        <div class="ressource-card"><div class="ressource-icon" style="background:rgba(41,171,226,0.10);">📄</div><div class="ressource-type" style="color:var(--oif-blue);">Rapport</div><div class="ressource-title">Rapport annuel CNF-Togo 2025</div><div class="ressource-date">Décembre 2025</div><div class="ressource-footer"><span class="ressource-size">PDF · 4.2 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+        <div class="ressource-card"><div class="ressource-icon" style="background:rgba(82,176,76,0.10);">📋</div><div class="ressource-type" style="color:var(--oif-green);">Texte officiel</div><div class="ressource-title">Charte de la Francophonie — Édition 2023</div><div class="ressource-date">Janvier 2023</div><div class="ressource-footer"><span class="ressource-size">PDF · 1.8 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+        <div class="ressource-card"><div class="ressource-icon" style="background:rgba(123,63,160,0.10);">📰</div><div class="ressource-type" style="color:var(--oif-purple);">Publication</div><div class="ressource-title">Guide pratique — Promotion du français au Togo</div><div class="ressource-date">Mars 2026</div><div class="ressource-footer"><span class="ressource-size">PDF · 2.5 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+        <div class="ressource-card"><div class="ressource-icon" style="background:rgba(212,168,0,0.10);">📊</div><div class="ressource-type" style="color:var(--gold);">Étude</div><div class="ressource-title">La Francophonie dans les chiffres — OIF 2025</div><div class="ressource-date">Octobre 2025</div><div class="ressource-footer"><span class="ressource-size">PDF · 8.1 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENAIRES -->
+  <div class="partners-section">
+    <div style="max-width:1280px;margin:0 auto;">
+      <p class="partners-label">Nos partenaires &amp; organisations associées</p>
+      <div class="partners-logos">
+        <div class="partner-logo"><svg width="28" height="28" viewBox="0 0 100 100" fill="none"><path d="M50 5 A45 45 0 0 1 95 50" stroke="#52B04C" stroke-width="10" stroke-linecap="round"/><path d="M95 50 A45 45 0 0 1 50 95" stroke="#7B3FA0" stroke-width="10" stroke-linecap="round"/><path d="M50 95 A45 45 0 0 1 5 50" stroke="#29ABE2" stroke-width="10" stroke-linecap="round"/><path d="M5 50 A45 45 0 0 1 50 5" stroke="#F5C400" stroke-width="10" stroke-linecap="round"/></svg><div class="partner-name">OIF<small>Organisation Internationale de la Francophonie</small></div></div>
+        <div class="partner-logo"><div style="width:28px;height:28px;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;">TG</div><div class="partner-name">Min. Affaires Étr.<small>République Togolaise</small></div></div>
+        <div class="partner-logo"><div style="width:28px;height:28px;background:#0072BC;border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;">UN</div><div class="partner-name">UNESCO<small>Nations Unies</small></div></div>
+        <div class="partner-logo"><div style="width:28px;height:28px;background:#003189;border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;">AU</div><div class="partner-name">Union Africaine<small>Organisation continentale</small></div></div>
+        <div class="partner-logo"><div style="width:28px;height:28px;background:#EF7C00;border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;">IF</div><div class="partner-name">IFEF<small>Institut Francophonie</small></div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-accueil -->
+
+<!-- ===================== PAGE: À PROPOS ===================== -->
+<div id="page-apropos" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb"><a href="#" onclick="showPage('accueil');return false;">Accueil</a><span>/</span><span style="color:rgba(255,255,255,0.65);">À Propos</span></div>
+      <div class="page-header-eyebrow">Notre Institution</div>
+      <h1 class="page-header-title">Commission Nationale<br>de la <em>Francophonie</em></h1>
+      <p class="page-header-desc">Organe gouvernemental togolais chargé de coordonner la participation du Togo aux activités de l'OIF depuis 1970.</p>
+    </div>
+  </div>
+  <div class="color-bar"></div>
+
+  <!-- Mission & Texte -->
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-eyebrow" style="color:var(--oif-blue);margin-bottom:14px;"><div class="section-eyebrow-dot" style="background:var(--oif-blue);"></div>Notre Mission</div>
+      <h2>Promouvoir la <em>langue française</em> et les valeurs francophones au Togo</h2>
+      <p>La Commission Nationale de la Francophonie du Togo (CNF-Togo) est l'organe officiel de l'État togolais chargé de coordonner et de piloter la participation du Togo aux activités de l'Organisation Internationale de la Francophonie (OIF).</p>
+      <p>Créée pour assurer la liaison entre le gouvernement togolais et les institutions francophones internationales, la CNF-Togo veille à ce que le Togo soit pleinement représenté et actif dans les instances décisionnelles de la Francophonie.</p>
+      <p>Au-delà de ce rôle de coordination, la CNF-Togo développe et soutient des programmes visant à valoriser la langue française sur l'ensemble du territoire national, à renforcer l'éducation en français et à promouvoir la diversité culturelle francophone.</p>
+
+      <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:var(--blue-pale);border-radius:var(--r-md);padding:20px;border-left:3px solid var(--oif-blue);">
+          <div style="font-size:28px;font-weight:700;color:var(--oif-blue);font-family:var(--font-serif);">1970</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Année de création<br>de la Francophonie institutionnelle</div>
+        </div>
+        <div style="background:var(--green-pale);border-radius:var(--r-md);padding:20px;border-left:3px solid var(--oif-green);">
+          <div style="font-size:28px;font-weight:700;color:var(--oif-green);font-family:var(--font-serif);">88</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">États et gouvernements<br>membres de l'OIF</div>
+        </div>
+        <div style="background:var(--purple-pale);border-radius:var(--r-md);padding:20px;border-left:3px solid var(--oif-purple);">
+          <div style="font-size:28px;font-weight:700;color:var(--oif-purple);font-family:var(--font-serif);">14+</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Programmes actifs<br>au Togo en 2026</div>
+        </div>
+        <div style="background:var(--gold-pale);border-radius:var(--r-md);padding:20px;border-left:3px solid var(--gold);">
+          <div style="font-size:28px;font-weight:700;color:var(--gold);font-family:var(--font-serif);">350M</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Locuteurs du français<br>dans le monde</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historique timeline -->
+    <div>
+      <div class="section-eyebrow" style="color:var(--oif-purple);margin-bottom:20px;"><div class="section-eyebrow-dot" style="background:var(--oif-purple);"></div>Historique</div>
+      <div class="about-timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--oif-blue);box-shadow:0 0 0 2px var(--oif-blue);"></div>
+          <div class="timeline-year">1970</div>
+          <div class="timeline-text">Création de l'Agence de coopération culturelle et technique (ACCT)</div>
+          <div class="timeline-sub">Niamey, Niger — Togo parmi les États fondateurs. Signature de la Convention de Niamey.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--oif-green);box-shadow:0 0 0 2px var(--oif-green);"></div>
+          <div class="timeline-year">1986</div>
+          <div class="timeline-text">Premier Sommet de la Francophonie</div>
+          <div class="timeline-sub">Paris — Participation active du Togo au premier Sommet des chefs d'État et de gouvernement.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--oif-yellow);box-shadow:0 0 0 2px var(--oif-yellow);"></div>
+          <div class="timeline-year">1997</div>
+          <div class="timeline-text">Création de l'OIF et de la Commission Nationale</div>
+          <div class="timeline-sub">Hanoi, Vietnam — Transformation en OIF et mise en place des CNF dans chaque État membre.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--oif-purple);box-shadow:0 0 0 2px var(--oif-purple);"></div>
+          <div class="timeline-year">2014</div>
+          <div class="timeline-text">Adoption de la Charte de la Francophonie révisée</div>
+          <div class="timeline-sub">Dakar — Renforcement des mandats des CNF nationales et de leur rôle de coordination.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--oif-blue);box-shadow:0 0 0 2px var(--oif-blue);"></div>
+          <div class="timeline-year">2026</div>
+          <div class="timeline-text">Lancement du nouveau site CNF-Togo</div>
+          <div class="timeline-sub">Lomé — Modernisation de la communication et renforcement de la visibilité numérique.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Organigramme -->
+  <section class="org-section">
+    <div class="org-inner">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="section-eyebrow" style="color:var(--oif-blue);justify-content:center;"><div class="section-eyebrow-dot" style="background:var(--oif-blue);"></div>Structure</div>
+        <h2 class="section-title" style="text-align:center;">Organigramme de la CNF-Togo</h2>
+      </div>
+      <div class="org-chart">
+        <div class="org-level">
+          <div class="org-node president" style="min-width:300px;">
+            <div class="org-node-icon">👑</div>
+            <div class="org-node-title">Président de la Commission</div>
+            <div class="org-node-sub" style="color:rgba(255,255,255,0.6);">Ministre des Affaires Étrangères</div>
+          </div>
+        </div>
+        <div class="org-connector"></div>
+        <div class="org-level" style="position:relative;">
+          <div style="position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--border);"></div>
+          <div class="org-node">
+            <div class="org-node-icon">📋</div>
+            <div class="org-node-title">Secrétaire Général</div>
+            <div class="org-node-sub">Coordination générale</div>
+          </div>
+          <div class="org-node">
+            <div class="org-node-icon">🤝</div>
+            <div class="org-node-title">Comité National</div>
+            <div class="org-node-sub">Membres représentants</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:120px;">
+          <div class="org-connector"></div>
+          <div class="org-connector"></div>
+        </div>
+        <div class="org-level" style="gap:16px;">
+          <div class="org-node"><div class="org-node-icon">📖</div><div class="org-node-title">Langue & Culture</div><div class="org-node-sub">Promotion du français</div></div>
+          <div class="org-node"><div class="org-node-icon">🎓</div><div class="org-node-title">Éducation & Formation</div><div class="org-node-sub">Bourses & programmes</div></div>
+          <div class="org-node"><div class="org-node-icon">🌐</div><div class="org-node-title">Coopération</div><div class="org-node-sub">Partenariats OIF</div></div>
+          <div class="org-node"><div class="org-node-icon">💻</div><div class="org-node-title">Communication</div><div class="org-node-sub">Digital & médias</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Équipe -->
+  <section class="section" style="background:var(--warm-white);">
+    <div class="section-inner">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="section-eyebrow" style="color:var(--oif-green);justify-content:center;"><div class="section-eyebrow-dot" style="background:var(--oif-green);"></div>Notre Équipe</div>
+        <h2 class="section-title" style="text-align:center;">Les membres du bureau de la CNF-Togo</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-avatar" style="background:rgba(41,171,226,0.12);">👤</div><div class="team-name">Prof. Robert Dovi</div><div class="team-role">Secrétaire Général</div><div class="team-bio">Coordonne les activités de la CNF-Togo et la liaison avec l'OIF depuis 2019.</div></div>
+        <div class="team-card"><div class="team-avatar" style="background:rgba(82,176,76,0.12);">👤</div><div class="team-name">Dr. Akossiwa Mensah</div><div class="team-role">Directrice Langue & Culture</div><div class="team-bio">Spécialiste en didactique du français et valorisation du patrimoine culturel francophone.</div></div>
+        <div class="team-card"><div class="team-avatar" style="background:rgba(245,196,0,0.12);">👤</div><div class="team-name">M. Kossi Agbodjan</div><div class="team-role">Responsable Éducation</div><div class="team-bio">Gestion des programmes de bourses et des partenariats avec les institutions d'enseignement.</div></div>
+        <div class="team-card"><div class="team-avatar" style="background:rgba(123,63,160,0.12);">👤</div><div class="team-name">Mme Afi Yawo</div><div class="team-role">Chargée de Communication</div><div class="team-bio">Communication institutionnelle, présence numérique et relations avec les médias.</div></div>
+        <div class="team-card"><div class="team-avatar" style="background:rgba(230,48,39,0.10);">👤</div><div class="team-name">M. Kodjo Aziawonou</div><div class="team-role">Responsable Coopération</div><div class="team-bio">Coordination des partenariats avec les organisations régionales et internationales.</div></div>
+        <div class="team-card"><div class="team-avatar" style="background:rgba(41,171,226,0.12);">👤</div><div class="team-name">Dr. Sœur Edith Koudolo</div><div class="team-role">Membre du Comité national</div><div class="team-bio">Représentante de la société civile au sein du comité national de la Francophonie.</div></div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-apropos -->
+
+<!-- ===================== PAGE: ACTUALITÉS ===================== -->
+<div id="page-actualites" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb"><a href="#" onclick="showPage('accueil');return false;">Accueil</a><span>/</span><span style="color:rgba(255,255,255,0.65);">Actualités</span></div>
+      <div class="page-header-eyebrow">Informations</div>
+      <h1 class="page-header-title">Actualités de la<br><em>Francophonie</em></h1>
+      <p class="page-header-desc">Suivez toutes les nouvelles de la Commission Nationale de la Francophonie du Togo et de l'espace francophone mondial.</p>
+    </div>
+  </div>
+  <div class="color-bar"></div>
+  <div style="background:var(--off-white);padding:40px 40px 0;">
+    <div class="actu-filters">
+      <button class="filter-btn active">Toutes</button>
+      <button class="filter-btn">Francophonie</button>
+      <button class="filter-btn">Programmes</button>
+      <button class="filter-btn">Événements</button>
+      <button class="filter-btn">Bourses</button>
+      <button class="filter-btn">Culture</button>
+    </div>
+  </div>
+  <section style="background:var(--off-white);padding:0 0 80px;">
+    <div class="actu-all-grid">
+      <div class="card-featured" style="display:flex;flex-direction:column;">
+        <div class="card-featured-img" style="background:linear-gradient(135deg,#1E3A5F,#29ABE2);height:200px;">🌍<div class="card-featured-img-overlay"></div><div class="card-featured-img-tag">Francophonie</div></div>
+        <div class="card-featured-body"><div class="card-meta">28 mars 2026 · CNF Rédaction</div><h3 class="card-title" style="font-size:18px;">Journée Internationale de la Francophonie 2026</h3><p class="card-excerpt">Le Togo a célébré la Journée Internationale de la Francophonie avec une série d'événements culturels à Lomé.</p><a class="card-link" href="#">Lire →</a></div>
+      </div>
+      <div class="card-featured" style="display:flex;flex-direction:column;">
+        <div class="card-featured-img" style="background:linear-gradient(135deg,#3A8A36,#52B04C);height:200px;">📋<div class="card-featured-img-overlay"></div><div class="card-featured-img-tag" style="background:var(--oif-green);">Programme</div></div>
+        <div class="card-featured-body"><div class="card-meta">15 mars 2026</div><h3 class="card-title" style="font-size:18px;">Nouveau programme de formation pour enseignants togolais</h3><p class="card-excerpt">L'OIF et la CNF-Togo lancent un programme de formation innovant pour les enseignants de français.</p><a class="card-link" href="#">Lire →</a></div>
+      </div>
+      <div class="card-featured" style="display:flex;flex-direction:column;">
+        <div class="card-featured-img" style="background:linear-gradient(135deg,#5A2D82,#7B3FA0);height:200px;">🏆<div class="card-featured-img-overlay"></div><div class="card-featured-img-tag" style="background:var(--oif-purple);">Prix</div></div>
+        <div class="card-featured-body"><div class="card-meta">5 mars 2026</div><h3 class="card-title" style="font-size:18px;">Prix de la Francophonie 2026 : appel ouvert</h3><p class="card-excerpt">Les jeunes talents togolais sont invités à participer au Prix de la Francophonie 2026, toutes catégories.</p><a class="card-link" href="#">Lire →</a></div>
+      </div>
+      <div class="card-featured" style="display:flex;flex-direction:column;">
+        <div class="card-featured-img" style="background:linear-gradient(135deg,#1E3A5F,#3A8A36);height:200px;">🤝<div class="card-featured-img-overlay"></div><div class="card-featured-img-tag">Partenariat</div></div>
+        <div class="card-featured-body"><div class="card-meta">20 février 2026</div><h3 class="card-title" style="font-size:18px;">Nouveau partenariat CNF-Togo et Université de Lomé</h3><p class="card-excerpt">Signature d'une convention de coopération pour le renforcement de l'enseignement du français à l'Université de Lomé.</p><a class="card-link" href="#">Lire →</a></div>
+      </div>
+      <div class="card-featured" style="display:flex;flex-direction:column;">
+        <div class="card-featured-img" style="background:linear-gradient(135deg,#D4A800,#F5C400);height:200px;">📚<div class="card-featured-img-overlay"></div><div class="card-featured-img-tag" style="background:var(--gold);">Publication</div></div>
+        <div class="card-featured-body"><div class="card-meta">10 février 2026</div><h3 class="card-title" style="font-size:18px;">Publication du guide pratique 2026 de la Francophonie au Togo</h3><p class="card-excerpt">La CNF-Togo publie son guide pratique annuel sur les ressources et opportunités de la Francophonie pour les Togolais.</p><a class="card-link" href="#">Lire →</a></div>
+      </div>
+      <div class="card-featured" style="display:flex;flex-direction:column;">
+        <div class="card-featured-img" style="background:linear-gradient(135deg,#29ABE2,#1A8FBF);height:200px;">🎓<div class="card-featured-img-overlay"></div><div class="card-featured-img-tag">Bourse</div></div>
+        <div class="card-featured-body"><div class="card-meta">2 février 2026</div><h3 class="card-title" style="font-size:18px;">Résultats bourses OIF 2025 : 12 lauréats togolais</h3><p class="card-excerpt">Douze étudiants et chercheurs togolais ont bénéficié des bourses de l'OIF pour l'année académique 2025-2026.</p><a class="card-link" href="#">Lire →</a></div>
+      </div>
+    </div>
+    <div style="text-align:center;padding-bottom:40px;"><button class="btn-see-all">Charger plus d'articles</button></div>
+  </section>
+</div><!-- /page-actualites -->
+
+<!-- ===================== PAGE: CANDIDATURES ===================== -->
+<div id="page-candidatures" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb"><a href="#" onclick="showPage('accueil');return false;">Accueil</a><span>/</span><span style="color:rgba(255,255,255,0.65);">Candidatures</span></div>
+      <div class="page-header-eyebrow">Opportunités</div>
+      <h1 class="page-header-title">Appels à candidature<br>& <em>Bourses</em></h1>
+      <p class="page-header-desc">Découvrez toutes les opportunités disponibles pour les citoyens togolais au sein de l'espace francophone.</p>
+    </div>
+  </div>
+  <div class="color-bar"></div>
+  <section class="candi-section" style="padding-top:60px;">
+    <div class="section-inner">
+      <div class="actu-filters" style="padding:0;margin-bottom:40px;">
+        <button class="filter-btn active">Tous</button>
+        <button class="filter-btn">Bourses d'études</button>
+        <button class="filter-btn">Prix & concours</button>
+        <button class="filter-btn">Formations</button>
+        <button class="filter-btn">Volontariat</button>
+      </div>
+      <div class="candi-grid">
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(41,171,226,0.10);color:var(--oif-blue);">🎓 Bourse</div>
+          <div class="candi-title">Bourses de l'OIF — Master en études francophones</div>
+          <div class="candi-org">Organisation Internationale de la Francophonie · Paris, France</div>
+          <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Bourse complète couvrant frais de scolarité, logement et transport pour un Master en études francophones ou en coopération internationale dans une université partenaire de l'OIF.</p>
+          <div class="candi-deadline candi-deadline-urgent"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">30 avril 2026</div></div><div class="candi-deadline-badge">⚡ Urgent</div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Voir les détails</button><button class="btn-candi-postuler">Postuler maintenant</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(82,176,76,0.10);color:var(--oif-green);">💼 Formation</div>
+          <div class="candi-title">Programme IFEF — Formation des formateurs en français</div>
+          <div class="candi-org">Institut de la Francophonie pour l'Éducation et la Formation</div>
+          <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Programme de formation intensive destiné aux enseignants de français du secondaire et du supérieur souhaitant améliorer leurs pratiques pédagogiques.</p>
+          <div class="candi-deadline"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">15 mai 2026</div></div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Voir les détails</button><button class="btn-candi-postuler">Postuler maintenant</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(123,63,160,0.10);color:var(--oif-purple);">🏆 Prix littéraire</div>
+          <div class="candi-title">Prix Senghor de la création littéraire francophone 2026</div>
+          <div class="candi-org">Fondation Senghor · Dakar, Sénégal</div>
+          <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Concours ouvert à tous les auteurs francophones de moins de 35 ans. Catégories : roman, nouvelle, poésie. Prix doté de 5 000 €.</p>
+          <div class="candi-deadline"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">30 juin 2026</div></div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Voir les détails</button><button class="btn-candi-postuler">Postuler maintenant</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(212,168,0,0.10);color:var(--gold);">🌐 Volontariat</div>
+          <div class="candi-title">Volontariat International de la Francophonie (VIF)</div>
+          <div class="candi-org">OIF · Plusieurs destinations francophones</div>
+          <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Mission de volontariat de 12 à 24 mois dans un pays francophone. Domaines : éducation, santé, gouvernance, développement durable. Indemnité mensuelle versée.</p>
+          <div class="candi-deadline candi-deadline-urgent"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">10 mai 2026</div></div><div class="candi-deadline-badge">⚡ Urgent</div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Voir les détails</button><button class="btn-candi-postuler">Postuler maintenant</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(41,171,226,0.10);color:var(--oif-blue);">🎓 Bourse doctorat</div>
+          <div class="candi-title">Bourse de doctorat — Langue française et linguistique</div>
+          <div class="candi-org">Agence Universitaire de la Francophonie (AUF)</div>
+          <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Soutien à la mobilité doctorale pour les chercheurs togolais souhaitant réaliser une thèse en cotutelle avec une université francophone du Nord.</p>
+          <div class="candi-deadline"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">1 juillet 2026</div></div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Voir les détails</button><button class="btn-candi-postuler">Postuler maintenant</button></div>
+        </div>
+        <div class="candi-card">
+          <div class="candi-type" style="background:rgba(82,176,76,0.10);color:var(--oif-green);">🎨 Résidence artistique</div>
+          <div class="candi-title">Résidence artistique — Dialogue des cultures francophones</div>
+          <div class="candi-org">Institut Français du Togo · Lomé</div>
+          <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Résidence de création de 3 mois à Lomé pour des artistes (musique, arts plastiques, théâtre) souhaitant explorer le thème de la Francophonie contemporaine.</p>
+          <div class="candi-deadline"><div><div class="candi-deadline-label">Date limite</div><div class="candi-deadline-date">31 juillet 2026</div></div></div>
+          <div class="candi-footer"><button class="btn-candi-detail">Voir les détails</button><button class="btn-candi-postuler">Postuler maintenant</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-candidatures -->
+
+<!-- ===================== PAGE: RESSOURCES ===================== -->
+<div id="page-ressources" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb"><a href="#" onclick="showPage('accueil');return false;">Accueil</a><span>/</span><span style="color:rgba(255,255,255,0.65);">Ressources</span></div>
+      <div class="page-header-eyebrow">Bibliothèque</div>
+      <h1 class="page-header-title">Ressources<br><em>documentaires</em></h1>
+      <p class="page-header-desc">Accédez à l'ensemble des rapports, publications, textes officiels et guides de la CNF-Togo et de l'OIF.</p>
+    </div>
+  </div>
+  <div class="color-bar"></div>
+  <section style="background:var(--off-white);padding:60px 0 80px;">
+    <div class="ressources-sidebar">
+      <div class="ressources-search"><input type="text" placeholder="Rechercher un document..."></div>
+      <button class="filter-btn active">Tous</button>
+      <button class="filter-btn">Rapports</button>
+      <button class="filter-btn">Textes officiels</button>
+      <button class="filter-btn">Publications</button>
+      <button class="filter-btn">Études</button>
+      <button class="filter-btn">Guides</button>
+    </div>
+    <div class="ressources-full-grid">
+      <div class="ressource-card"><div class="ressource-icon" style="background:rgba(41,171,226,0.10);">📄</div><div class="ressource-type" style="color:var(--oif-blue);">Rapport annuel</div><div class="ressource-title">Rapport annuel CNF-Togo 2025</div><div class="ressource-date">Décembre 2025</div><p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Bilan complet des activités, programmes et partenariats de la CNF-Togo pour l'année 2025.</p><div class="ressource-footer"><span class="ressource-size">PDF · 4.2 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+      <div class="ressource-card"><div class="ressource-icon" style="background:rgba(82,176,76,0.10);">📋</div><div class="ressource-type" style="color:var(--oif-green);">Texte officiel</div><div class="ressource-title">Charte de la Francophonie — Édition 2023</div><div class="ressource-date">Janvier 2023</div><p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Document fondateur révisé de l'OIF définissant les valeurs, missions et structure institutionnelle.</p><div class="ressource-footer"><span class="ressource-size">PDF · 1.8 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+      <div class="ressource-card"><div class="ressource-icon" style="background:rgba(123,63,160,0.10);">📰</div><div class="ressource-type" style="color:var(--oif-purple);">Guide pratique</div><div class="ressource-title">Guide de promotion du français au Togo 2026</div><div class="ressource-date">Mars 2026</div><p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Méthodes et outils pratiques pour les acteurs de terrain souhaitant promouvoir le français.</p><div class="ressource-footer"><span class="ressource-size">PDF · 2.5 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+      <div class="ressource-card"><div class="ressource-icon" style="background:rgba(212,168,0,0.10);">📊</div><div class="ressource-type" style="color:var(--gold);">Étude statistique</div><div class="ressource-title">La Francophonie dans les chiffres — OIF 2025</div><div class="ressource-date">Octobre 2025</div><p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Données et statistiques sur la langue française dans le monde : locuteurs, enseignement, économie.</p><div class="ressource-footer"><span class="ressource-size">PDF · 8.1 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+      <div class="ressource-card"><div class="ressource-icon" style="background:rgba(41,171,226,0.10);">📜</div><div class="ressource-type" style="color:var(--oif-blue);">Texte officiel</div><div class="ressource-title">Convention de Niamey — Texte fondateur (1970)</div><div class="ressource-date">Niamey, 1970</div><p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Document historique de création de la francophonie institutionnelle. Togo signataire.</p><div class="ressource-footer"><span class="ressource-size">PDF · 0.9 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+      <div class="ressource-card"><div class="ressource-icon" style="background:rgba(82,176,76,0.10);">📗</div><div class="ressource-type" style="color:var(--oif-green);">Manuel</div><div class="ressource-title">Manuel pédagogique : enseigner en français au Togo</div><div class="ressource-date">Septembre 2025</div><p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Ressource pédagogique pour les enseignants du primaire et secondaire du système éducatif togolais.</p><div class="ressource-footer"><span class="ressource-size">PDF · 3.4 Mo</span><button class="btn-dl">⬇ Télécharger</button></div></div>
+    </div>
+  </section>
+</div><!-- /page-ressources -->
+
+<!-- ===================== PAGE: ÉVÉNEMENTS ===================== -->
+<div id="page-evenements" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb"><a href="#" onclick="showPage('accueil');return false;">Accueil</a><span>/</span><span style="color:rgba(255,255,255,0.65);">Événements</span></div>
+      <div class="page-header-eyebrow">Agenda</div>
+      <h1 class="page-header-title">Agenda de la<br><em>Francophonie</em></h1>
+      <p class="page-header-desc">Retrouvez tous les événements organisés par la CNF-Togo et ceux auxquels participe le Togo dans l'espace francophone.</p>
+    </div>
+  </div>
+  <div class="color-bar"></div>
+  <section class="events-section" style="padding-top:60px;min-height:auto;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div class="section-eyebrow events-eyebrow" style="margin-bottom:32px;"><div class="section-eyebrow-dot" style="background:var(--oif-yellow);"></div>Prochains événements</div>
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-date-badge"><div class="event-day">20</div><div class="event-month">Mai 2026</div></div>
+          <div class="event-title">Forum annuel de la Francophonie au Togo</div>
+          <div class="event-location">Palais des Congrès, Lomé</div>
+          <div class="event-desc">Réunion annuelle des acteurs de la francophonie togolaise : bilan 2025, perspectives 2026 et signature de nouveaux partenariats stratégiques.</div>
+          <button class="btn-event">S'inscrire →</button>
+        </div>
+        <div class="event-card">
+          <div class="event-date-badge"><div class="event-day">14</div><div class="event-month">Juin 2026</div></div>
+          <div class="event-title">Concours national de la Langue Française</div>
+          <div class="event-location">Université de Lomé</div>
+          <div class="event-desc">Compétition ouverte aux étudiants et lycéens togolais dans plusieurs disciplines : éloquence, rédaction, poésie et débat francophone.</div>
+          <button class="btn-event">S'inscrire →</button>
+        </div>
+        <div class="event-card">
+          <div class="event-date-badge"><div class="event-day">02</div><div class="event-month">Jul. 2026</div></div>
+          <div class="event-title">Atelier : Diplomatie francophone</div>
+          <div class="event-location">CNF-Togo, Lomé</div>
+          <div class="event-desc">Formation intensive de 3 jours pour les cadres de l'administration publique : négociation multilatérale, représentation OIF et diplomatie culturelle.</div>
+          <button class="btn-event">S'inscrire →</button>
+        </div>
+        <div class="event-card" style="border-color:rgba(255,255,255,0.12);">
+          <div class="event-date-badge"><div class="event-day">20</div><div class="event-month">Mar. 2027</div></div>
+          <div class="event-title">Journée Internationale de la Francophonie 2027</div>
+          <div class="event-location">Lomé & régions du Togo</div>
+          <div class="event-desc">Célébration nationale coordonnée par la CNF-Togo avec des événements dans toutes les préfectures : Lomé, Sokodé, Kara, Atakpamé, Dapaong.</div>
+          <button class="btn-event">Se rappeler →</button>
+        </div>
+        <div class="event-card" style="border-color:rgba(255,255,255,0.12);">
+          <div class="event-date-badge"><div class="event-day">15</div><div class="event-month">Sep. 2026</div></div>
+          <div class="event-title">Conférence régionale — Francophonie en Afrique de l'Ouest</div>
+          <div class="event-location">Abidjan, Côte d'Ivoire</div>
+          <div class="event-desc">Conférence réunissant les CNF des pays d'Afrique de l'Ouest pour harmoniser les actions en faveur de la Francophonie dans la sous-région.</div>
+          <button class="btn-event">En savoir plus →</button>
+        </div>
+        <div class="event-card" style="border-color:rgba(255,255,255,0.12);">
+          <div class="event-date-badge"><div class="event-day">08</div><div class="event-month">Oct. 2026</div></div>
+          <div class="event-title">Sommet de la Francophonie 2026</div>
+          <div class="event-location">Erevan, Arménie</div>
+          <div class="event-desc">Participation de la délégation togolaise au Sommet biennal des chefs d'État et de gouvernement ayant le français en partage.</div>
+          <button class="btn-event">Suivre l'événement →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Événements passés -->
+  <section class="section" style="background:var(--off-white);">
+    <div class="section-inner">
+      <div class="section-eyebrow" style="color:var(--text-muted);"><div class="section-eyebrow-dot" style="background:var(--text-muted);"></div>Événements passés</div>
+      <h2 class="section-title">Archives 2026</h2>
+      <div style="display:grid;grid-template-columns:1fr;gap:16px;max-width:800px;">
+        <div style="display:flex;align-items:center;gap:20px;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow);">
+          <div style="background:var(--off-white);border-radius:var(--r-md);padding:12px 16px;text-align:center;flex-shrink:0;min-width:64px;"><div style="font-size:22px;font-weight:600;font-family:var(--font-serif);color:var(--text-muted);">20</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Mar.</div></div>
+          <div style="flex:1;"><div style="font-family:var(--font-serif);font-size:17px;font-weight:500;color:var(--text);margin-bottom:4px;">Journée Internationale de la Francophonie 2026</div><div style="font-size:13px;color:var(--text-muted);">📍 Lomé — Événement terminé</div></div>
+          <span style="font-size:11px;background:var(--green-pale);color:var(--green);padding:4px 12px;border-radius:20px;font-weight:700;">Terminé</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow);">
+          <div style="background:var(--off-white);border-radius:var(--r-md);padding:12px 16px;text-align:center;flex-shrink:0;min-width:64px;"><div style="font-size:22px;font-weight:600;font-family:var(--font-serif);color:var(--text-muted);">05</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Fév.</div></div>
+          <div style="flex:1;"><div style="font-family:var(--font-serif);font-size:17px;font-weight:500;color:var(--text);margin-bottom:4px;">Atelier régional — Enseignement du français numérique</div><div style="font-size:13px;color:var(--text-muted);">📍 Lomé — Événement terminé</div></div>
+          <span style="font-size:11px;background:var(--green-pale);color:var(--green);padding:4px 12px;border-radius:20px;font-weight:700;">Terminé</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-evenements -->
+
+<!-- ===================== PAGE: CONTACT ===================== -->
+<div id="page-contact" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb"><a href="#" onclick="showPage('accueil');return false;">Accueil</a><span>/</span><span style="color:rgba(255,255,255,0.65);">Contact</span></div>
+      <div class="page-header-eyebrow">Nous Contacter</div>
+      <h1 class="page-header-title">Contactez la<br><em>CNF-Togo</em></h1>
+      <p class="page-header-desc">Notre équipe est disponible pour répondre à toutes vos questions sur nos programmes, activités et opportunités.</p>
+    </div>
+  </div>
+  <div class="color-bar"></div>
+  <section style="background:var(--off-white);padding:0 0 80px;">
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info-card">
+          <h3>Coordonnées</h3>
+          <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-label">Adresse</div><div class="contact-val">Lomé, République Togolaise<br>Quartier Administratif</div></div></div>
+          <div class="contact-item"><div class="contact-icon">📧</div><div><div class="contact-label">Email général</div><div class="contact-val">contact@cnf-togo.tg</div></div></div>
+          <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-label">Téléphone</div><div class="contact-val">+228 22 21 00 00</div></div></div>
+          <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-label">Horaires d'ouverture</div><div class="contact-val">Lundi – Vendredi<br>8h00 – 17h00</div></div></div>
+          <div style="margin-top:24px;border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;">
+            <div class="contact-label" style="margin-bottom:14px;">Nous suivre</div>
+            <div class="footer-socials">
+              <a class="social-btn" href="#" aria-label="Facebook">f</a>
+              <a class="social-btn" href="#" aria-label="Twitter/X">𝕏</a>
+              <a class="social-btn" href="#" aria-label="LinkedIn">in</a>
+              <a class="social-btn" href="#" aria-label="YouTube">▶</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte map placeholder -->
+        <div class="map-box" style="margin-top:24px;border-radius:var(--r-lg);">
+          <div class="map-placeholder"><div class="map-icon">🗺️</div><p>Lomé, Togo<br><small style="color:var(--text-muted);">Carte interactive</small></p></div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>Envoyer un message</h3>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Prénom</label><input class="form-input" type="text" placeholder="Votre prénom"></div>
+          <div class="form-group"><label class="form-label">Nom</label><input class="form-input" type="text" placeholder="Votre nom"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="votre@email.com"></div>
+        <div class="form-group"><label class="form-label">Organisation</label><input class="form-input" type="text" placeholder="Votre organisation (optionnel)"></div>
+        <div class="form-group">
+          <label class="form-label">Sujet</label>
+          <select class="form-select">
+            <option value="">Sélectionnez un sujet</option>
+            <option>Renseignements généraux</option>
+            <option>Bourses et candidatures</option>
+            <option>Programmes et formations</option>
+            <option>Partenariat institutionnel</option>
+            <option>Événements</option>
+            <option>Presse et médias</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Votre message..."></textarea></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <input type="checkbox" id="rgpd" style="width:16px;height:16px;accent-color:var(--navy);">
+          <label for="rgpd" style="font-size:13px;color:var(--text-muted);">J'accepte que mes données soient utilisées pour traiter ma demande conformément à la <a href="#" style="color:var(--oif-blue);">politique de confidentialité</a>.</label>
+        </div>
+        <button class="btn-submit">Envoyer le message →</button>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-contact -->
+
+<!-- ===================== FOOTER (partagé) ===================== -->
+<footer class="footer" id="main-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-logo">
+          <svg width="44" height="44" viewBox="0 0 100 100" fill="none"><path d="M50 5 A45 45 0 0 1 95 50" stroke="#52B04C" stroke-width="10" stroke-linecap="round"/><path d="M95 50 A45 45 0 0 1 50 95" stroke="#7B3FA0" stroke-width="10" stroke-linecap="round"/><path d="M50 95 A45 45 0 0 1 5 50" stroke="#29ABE2" stroke-width="10" stroke-linecap="round"/><path d="M5 50 A45 45 0 0 1 50 5" stroke="#F5C400" stroke-width="10" stroke-linecap="round"/></svg>
+          <div class="footer-brand-name">Commission Nationale<br>de la <span>Francophonie</span></div>
+        </div>
+        <p class="footer-brand-desc">La CNF-Togo est l'organe gouvernemental coordonnant la participation du Togo aux activités de l'OIF. Elle promeut la langue française et valorise la culture francophone sur l'ensemble du territoire togolais.</p>
+        <div class="footer-oif-badge"><svg width="22" height="22" viewBox="0 0 100 100" fill="none"><path d="M50 5 A45 45 0 0 1 95 50" stroke="#52B04C" stroke-width="12" stroke-linecap="round"/><path d="M95 50 A45 45 0 0 1 50 95" stroke="#7B3FA0" stroke-width="12" stroke-linecap="round"/><path d="M50 95 A45 45 0 0 1 5 50" stroke="#29ABE2" stroke-width="12" stroke-linecap="round"/><path d="M5 50 A45 45 0 0 1 50 5" stroke="#F5C400" stroke-width="12" stroke-linecap="round"/></svg><div class="footer-oif-badge-text"><strong>Membre de l'OIF</strong>Organisation Internationale de la Francophonie</div></div>
+        <div class="footer-socials"><a class="social-btn" href="#" aria-label="Facebook">f</a><a class="social-btn" href="#" aria-label="Twitter">𝕏</a><a class="social-btn" href="#" aria-label="LinkedIn">in</a><a class="social-btn" href="#" aria-label="YouTube">▶</a></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Institution</div>
+        <a class="footer-link" href="#" onclick="showPage('apropos');return false;">Notre mission</a>
+        <a class="footer-link" href="#" onclick="showPage('apropos');return false;">Historique</a>
+        <a class="footer-link" href="#" onclick="showPage('apropos');return false;">Organigramme</a>
+        <a class="footer-link" href="#" onclick="showPage('apropos');return false;">Membres</a>
+        <a class="footer-link" href="#" onclick="showPage('contact');return false;">Partenaires</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Contenus</div>
+        <a class="footer-link" href="#" onclick="showPage('actualites');return false;">Actualités</a>
+        <a class="footer-link" href="#" onclick="showPage('evenements');return false;">Événements</a>
+        <a class="footer-link" href="#" onclick="showPage('candidatures');return false;">Candidatures</a>
+        <a class="footer-link" href="#" onclick="showPage('ressources');return false;">Bibliothèque</a>
+        <a class="footer-link" href="#" onclick="showPage('contact');return false;">Contact</a>
+      </div>
+      <div>
+        <div class="footer-nl-title">Newsletter</div>
+        <p class="footer-nl-desc">Recevez nos actualités et opportunités directement par e-mail.</p>
+        <div class="footer-nl-form"><input class="footer-nl-input" type="email" placeholder="votre@email.com"><button class="footer-nl-btn">OK →</button></div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.20);margin-top:10px;">Double opt-in · Conformité RGPD</p>
+        <div style="margin-top:24px;">
+          <div class="footer-col-title">Contact</div>
+          <p style="font-size:13px;color:rgba(255,255,255,0.40);line-height:1.75;">📍 Lomé, Togo<br>📧 contact@cnf-togo.tg<br>📞 +228 22 21 00 00</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-color-bar"></div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2026 Commission Nationale de la Francophonie du Togo — Tous droits réservés</p>
+      <div class="footer-bottom-links">
+        <a class="footer-bottom-link" href="#">Mentions légales</a>
+        <a class="footer-bottom-link" href="#">Politique de confidentialité</a>
+        <a class="footer-bottom-link" href="#">Plan du site</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(id) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target page
+  const target = document.getElementById('page-' + id);
+  if (target) target.classList.add('active');
+
+  // Update nav active state
+  document.querySelectorAll('.nb-link').forEach(l => l.classList.remove('active'));
+  const navLink = document.getElementById('nav-' + id);
+  if (navLink) navLink.classList.add('active');
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Filter buttons (visual only)
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('.actu-filters, .ressources-sidebar').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
